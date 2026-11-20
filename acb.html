@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#bd351e">
+<title>KŌRA — Asian Noodle House</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+:root {
+  --red: #bd351e;
+  --orange: #d65b32;
+  --cream: #f5f0e7;
+  --dark: #201b17;
+  --muted: #82796e;
+  --serif: 'Playfair Display', serif;
+  --sans: 'DM Sans', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+#menu,
+#story,
+#contact { scroll-margin-top: 100px; }
+
+body {
+  background: var(--cream);
+  color: var(--dark);
+  font-family: var(--sans);
+  overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+
+button { font: inherit; cursor: pointer; }
+
+/* INTRO */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+}
+
+.intro-content {
+  text-align: center;
+  overflow: hidden;
+}
+
+.intro-logo {
+  font-family: var(--serif);
+  font-size: clamp(4rem, 12vw, 9rem);
+  letter-spacing: 12px;
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.intro-tag {
+  font-size: 10px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-top: 15px;
+  opacity: 0;
+}
+
+/* NAVIGATION */
+
+.navbar {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  width: 100%;
+  padding: 30px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--cream);
+  transition: background-color .3s, color .3s, box-shadow .3s;
+}
+
+.navbar.scrolled {
+  background: var(--cream);
+  color: var(--dark);
+  box-shadow: 0 4px 20px rgba(32, 27, 23, .1);
+}
+
+.logo {
+  font-family: var(--serif);
+  font-size: 32px;
+  letter-spacing: 4px;
+  font-weight: 600;
+}
+
+.logo span {
+  display: block;
+  font-family: var(--sans);
+  font-size: 8px;
+  letter-spacing: 4px;
+  text-align: center;
+  margin-top: -3px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.nav-links a {
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width .3s;
+}
+
+.nav-links a:hover::after { width: 100%; }
+
+.book-btn {
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  padding: 13px 22px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: .3s;
+}
+
+.book-btn:hover {
+  background: var(--cream);
+  color: var(--red);
+}
+
+.navbar.scrolled .book-btn:hover {
+  background: var(--red);
+  color: var(--cream);
+}
+
+.menu-toggle {
+  display: none;
+  border: 0;
+  color: white;
+  background: transparent;
+  font-size: 26px;
+}
+
+.navbar.scrolled .menu-toggle { color: var(--dark); }
+
+/* HERO */
+
+.hero {
+  height: 100vh;
+  min-height: 700px;
+  background: var(--red);
+  color: var(--cream);
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 10%;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 50%, rgba(255,190,125,.14), transparent 45%);
+  pointer-events: none;
+}
+
+.hero-text {
+  position: relative;
+  z-index: 3;
+  width: 48%;
+  margin-top: 70px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(55px, 7.2vw, 105px);
+  line-height: .99;
+  letter-spacing: -3px;
+}
+
+.hero h1 em { font-weight: 400; }
+
+.hero-description {
+  font-size: 13px;
+  line-height: 2;
+  max-width: 360px;
+  margin-top: 30px;
+  color: rgba(255,255,255,.76);
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 38px;
+}
+
+.light-btn {
+  padding: 16px 27px;
+  background: var(--cream);
+  color: var(--red);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: .3s;
+}
+
+.light-btn:hover {
+  background: white;
+  transform: translateY(-4px);
+}
+
+.text-link {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* HERO DISH */
+
+.hero-visual {
+  position: absolute;
+  right: 3%;
+  top: 12%;
+  width: 55%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1100px;
+}
+
+.dish {
+  position: relative;
+  width: min(48vw, 610px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  transform: rotateX(12deg);
+}
+
+.plate {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: #eee4d4;
+  box-shadow: 0 40px 90px #6d1b12aa, inset 0 0 0 12px #d5c7b1;
+}
+
+.plate::after {
+  content: '';
+  position: absolute;
+  inset: 7%;
+  border-radius: 50%;
+  border: 2px solid #d3c2a7;
+}
+
+.dish-photo {
+  position: absolute;
+  inset: 15%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #ddd;
+  box-shadow: 0 20px 45px #4d201b55;
+  transform: translateZ(25px);
+}
+
+.dish-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.25);
+}
+
+.steam {
+  position: absolute;
+  z-index: 4;
+  top: 19%;
+  left: 50%;
+  width: 34%;
+  height: 32%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.steam-wisp {
+  position: absolute;
+  bottom: 0;
+  width: 12px;
+  height: 78%;
+  border-radius: 50%;
+  background: linear-gradient(to top, transparent, rgba(255, 244, 226, .7), transparent);
+  filter: blur(3px);
+  opacity: 0;
+  animation: steam-rise 3.2s ease-out infinite;
+}
+
+.steam-wisp:nth-child(1) { left: 20%; animation-delay: 0s; }
+.steam-wisp:nth-child(2) { left: 48%; animation-delay: 1s; }
+.steam-wisp:nth-child(3) { left: 76%; animation-delay: 2s; }
+
+@keyframes steam-rise {
+  0% { opacity: 0; transform: translate(0, 12px) scale(.8); }
+  30% { opacity: .65; }
+  100% { opacity: 0; transform: translate(12px, -38px) scale(1.25); }
+}
+
+.floating-ingredient {
+  position: absolute;
+  z-index: 5;
+  font-size: clamp(30px, 4vw, 57px);
+  filter: drop-shadow(0 10px 9px #4a160b55);
+  transform-style: preserve-3d;
+}
+
+.ingredient-1 { top: 5%; left: 40%; }
+.ingredient-2 { top: 28%; right: 1%; }
+.ingredient-3 { bottom: 10%; right: 12%; }
+.ingredient-4 { bottom: 0%; left: 37%; }
+.ingredient-5 { top: 45%; left: -1%; }
+.ingredient-6 { top: 8%; left: 8%; }
+.ingredient-7 { bottom: 25%; left: 10%; }
+
+.hero-note {
+  position: absolute;
+  bottom: 35px;
+  left: 7%;
+  font-size: 9px;
+  letter-spacing: 3px;
+  opacity: .65;
+  text-transform: uppercase;
+}
+
+.hero-number {
+  position: absolute;
+  bottom: 35px;
+  right: 7%;
+  font-family: var(--serif);
+  font-size: 16px;
+}
+
+/* INTRODUCTION */
+
+.intro-section {
+  padding: 145px 10%;
+  text-align: center;
+}
+
+.section-label {
+  color: var(--orange);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 4px;
+  margin-bottom: 25px;
+}
+
+.intro-section h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 75px);
+  line-height: 1.15;
+  max-width: 850px;
+  margin: auto;
+}
+
+.intro-section h2 em { color: var(--orange); }
+
+.intro-section p {
+  max-width: 470px;
+  margin: 30px auto 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 2;
+}
+
+/* EXPLODED VIEW */
+
+.explosion-section {
+  padding: 100px 7% 130px;
+  background: #eee7db;
+  overflow: hidden;
+}
+
+.explosion-header {
+  text-align: center;
+  margin-bottom: 65px;
+}
+
+.explosion-header h2 {
+  font-family: var(--serif);
+  font-size: clamp(40px, 5vw, 65px);
+  font-weight: 400;
+}
+
+.explosion-stage {
+  position: relative;
+  max-width: 1100px;
+  height: 650px;
+  margin: auto;
+  perspective: 1200px;
+}
+
+.explosion-plate {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotateX(15deg);
+  background: #f9f5eb;
+  box-shadow: 0 30px 70px #8c796044, inset 0 0 0 15px #e4d9c7;
+}
+
+.explosion-plate::after {
+  content: '';
+  position: absolute;
+  inset: 25px;
+  border-radius: 50%;
+  border: 1px solid #d5c7b2;
+}
+
+.noodle-center {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 2;
+  box-shadow: 0 15px 40px #59402e55;
+}
+
+.noodle-center img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ingredient {
+  position: absolute;
+  z-index: 5;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #faf6ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 43px;
+  box-shadow: 0 15px 30px #59402e20;
+  border: 1px solid #e4d9c8;
+  transform-style: preserve-3d;
+}
+
+.ingredient::after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 75px;
+  background: #a78e70;
+  top: 100%;
+  left: 50%;
+  transform-origin: top;
+  opacity: .7;
+}
+
+.ingredient-label {
+  position: absolute;
+  z-index: 7;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #5b5044;
+}
+
+.i1 { top: 4%; left: 45%; }
+.i2 { top: 20%; right: 10%; }
+.i3 { bottom: 10%; right: 12%; }
+.i4 { bottom: 1%; left: 43%; }
+.i5 { top: 43%; left: 5%; }
+.i6 { top: 15%; left: 13%; }
+.i7 { bottom: 15%; left: 15%; }
+
+.l1 { top: 20%; left: 49%; }
+.l2 { top: 36%; right: 5%; }
+.l3 { bottom: 12%; right: 2%; }
+.l4 { bottom: 0%; left: 53%; }
+.l5 { top: 52%; left: 0; }
+.l6 { top: 30%; left: 8%; }
+.l7 { bottom: 28%; left: 4%; }
+
+/* MENU */
+
+.menu-section {
+  padding: 130px 9%;
+}
+
+.menu-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 65px;
+}
+
+.menu-heading h2 {
+  font-family: var(--serif);
+  font-size: clamp(45px, 6vw, 75px);
+  font-weight: 400;
+}
+
+.menu-heading p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+  max-width: 250px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 35px;
+}
+
+.menu-card { cursor: pointer; }
+
+.menu-image {
+  height: 350px;
+  overflow: hidden;
+  background: #e2d8c9;
+}
+
+.menu-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s cubic-bezier(.2,.8,.2,1);
+}
+
+.menu-card:hover img { transform: scale(1.09); }
+
+.menu-info {
+  padding-top: 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.menu-info h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.menu-info span {
+  font-size: 13px;
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.menu-description {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+  margin-top: 9px;
+}
+
+/* STORY */
+
+.story-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #24201c;
+  color: var(--cream);
+  min-height: 650px;
+}
+
+.story-image {
+  min-height: 550px;
+  overflow: hidden;
+}
+
+.story-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story-content {
+  padding: 90px 12%;
+  align-self: center;
+}
+
+.story-content h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(40px, 5vw, 65px);
+  line-height: 1.15;
+}
+
+.story-content h2 em { color: #e58a56; }
+
+.story-content p {
+  font-size: 12px;
+  line-height: 2.1;
+  color: #b8aea1;
+  margin: 28px 0;
+  max-width: 400px;
+}
+
+.story-content .light-btn {
+  display: inline-block;
+}
+
+/* QUOTE */
+
+.quote-section {
+  padding: 130px 10%;
+  text-align: center;
+}
+
+.quote-section h2 {
+  font-family: var(--serif);
+  font-size: clamp(30px, 5vw, 58px);
+  line-height: 1.3;
+  font-weight: 400;
+  max-width: 850px;
+  margin: auto;
+}
+
+.quote-section p {
+  margin-top: 30px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--orange);
+  text-transform: uppercase;
+}
+
+/* CONTACT */
+
+.contact-section {
+  background: var(--red);
+  color: var(--cream);
+  padding: 110px 10%;
+  text-align: center;
+}
+
+.contact-section h2 {
+  font-family: var(--serif);
+  font-size: clamp(45px, 7vw, 85px);
+  font-weight: 400;
+}
+
+.contact-section p {
+  margin: 20px auto 35px;
+  font-size: 12px;
+  line-height: 2;
+  max-width: 390px;
+  opacity: .8;
+}
+
+.contact-section .book-btn:hover {
+  background: var(--cream);
+  color: var(--red);
+}
+
+/* FOOTER */
+
+footer {
+  background: #201b17;
+  color: var(--cream);
+  padding: 60px 8% 30px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 30px;
+  padding-bottom: 55px;
+}
+
+.footer-brand {
+  font-family: var(--serif);
+  font-size: 48px;
+  letter-spacing: 5px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 25px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  flex-wrap: wrap;
+}
+
+.footer-bottom {
+  border-top: 1px solid #514940;
+  padding-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  color: #9f9589;
+  font-size: 10px;
+}
+
+/* ANIMATIONS */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(45px);
+}
+
+@media(max-width: 900px) {
+  .hero-text { width: 55%; }
+  .hero-visual { right: -13%; width: 65%; opacity: .85; }
+  .menu-grid { grid-template-columns: repeat(2, 1fr); }
+  .explosion-stage { transform: scale(.85); transform-origin: center; }
+}
+
+@media(max-width: 650px) {
+  .navbar { padding: 23px 6%; }
+  .logo { font-size: 26px; }
+  .menu-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 75px;
+    right: 5%;
+    left: 5%;
+    background: #9d2b1b;
+    padding: 30px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+  .nav-links.active { display: flex; }
+  .nav-links .book-btn { width: 100%; }
+
+  .hero {
+    min-height: 850px;
+    height: auto;
+    align-items: start;
+    padding: 180px 8% 60px;
+  }
+  .hero-text { width: 100%; }
+  .hero h1 { font-size: 65px; }
+  .hero-description { max-width: 300px; }
+  .hero-visual {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 115%;
+    height: 390px;
+    margin: 25px -7% 0;
+  }
+  .dish { width: 100%; max-width: 400px; }
+  .hero-note { bottom: 18px; }
+  .hero-number { bottom: 18px; }
+
+  .intro-section { padding: 100px 8%; }
+  .explosion-section { padding: 80px 3%; }
+  .explosion-stage {
+    height: 480px;
+    transform: scale(.68);
+    transform-origin: top center;
+    width: 140%;
+    margin-left: -20%;
+    margin-bottom: -140px;
+  }
+
+  .menu-section { padding: 90px 7%; }
+  .menu-heading { display: block; }
+  .menu-heading p { margin-top: 20px; }
+  .menu-grid { grid-template-columns: 1fr; gap: 45px; }
+  .menu-image { height: 330px; }
+
+  .story-section { grid-template-columns: 1fr; }
+  .story-image { min-height: 400px; }
+  .story-content { padding: 75px 9%; }
+
+  .quote-section { padding: 90px 8%; }
+  .contact-section { padding: 90px 8%; }
+  .footer-top { flex-direction: column; }
+  .footer-bottom { flex-direction: column; gap: 15px; }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+
+  .steam-wisp {
+    animation: none;
+    opacity: .25;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO ANIMATION -->
+<div class="intro">
+  <div class="intro-content">
+    <div class="intro-logo">KŌRA</div>
+    <div class="intro-tag">A journey through Asian flavours</div>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <a href="#home" class="logo">KŌRA<span>NOODLE HOUSE</span></a>
+
+  <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
+
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#story">Our Story</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="book-btn">Book Now ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+  <div class="hero-text">
+    <div class="eyebrow hero-reveal">Authentic Asian Cuisine · Est. 2026</div>
+
+    <h1 class="hero-reveal">
+      A bowl<br>
+      beyond<br>
+      <em>ordinary.</em>
+    </h1>
+
+    <p class="hero-description hero-reveal">
+      A celebration of bold Asian flavours, handcrafted noodles
+      and the beautiful art of slow cooking.
+    </p>
+
+    <div class="hero-actions hero-reveal">
+      <a href="#menu" class="light-btn">Explore Menu ↗</a>
+      <a href="#story" class="text-link">Discover Our Story</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="dish">
+      <div class="plate"></div>
+
+      <div class="dish-photo">
+        <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1100&q=90" alt="Asian noodle bowl">
+      </div>
+
+      <div class="steam" aria-hidden="true">
+        <span class="steam-wisp"></span>
+        <span class="steam-wisp"></span>
+        <span class="steam-wisp"></span>
+      </div>
+
+      <div class="floating-ingredient ingredient-1">🍤</div>
+      <div class="floating-ingredient ingredient-2">🌶️</div>
+      <div class="floating-ingredient ingredient-3">🥜</div>
+      <div class="floating-ingredient ingredient-4">🍋</div>
+      <div class="floating-ingredient ingredient-5">🥢</div>
+      <div class="floating-ingredient ingredient-6">🥚</div>
+      <div class="floating-ingredient ingredient-7">🌿</div>
+    </div>
+  </div>
+
+  <div class="hero-note">Handcrafted · Fresh · Extraordinary</div>
+  <div class="hero-number">01 / 04</div>
+</section>
+
+<!-- INTRO -->
+<section class="intro-section">
+  <div class="section-label reveal">The KŌRA philosophy</div>
+
+  <h2 class="reveal">
+    More than noodles.<br>
+    A little <em>piece of Asia</em><br>
+    in every bite.
+  </h2>
+
+  <p class="reveal">
+    Inspired by the streets of Bangkok, the kitchens of Tokyo
+    and the soul of Asian cuisine. Every bowl tells a story
+    of flavour, passion and craftsmanship.
+  </p>
+</section>
+
+<!-- EXPLODED INGREDIENT SECTION -->
+<section class="explosion-section" id="ingredients">
+
+  <div class="explosion-header">
+    <div class="section-label reveal">The art of a perfect bowl</div>
+    <h2 class="reveal">Every ingredient has a story.</h2>
+  </div>
+
+  <div class="explosion-stage">
+
+    <div class="explosion-plate"></div>
+
+    <div class="noodle-center">
+      <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=90" alt="Signature noodle dish">
+    </div>
+
+    <div class="ingredient i1">🍤</div>
+    <div class="ingredient-label l1">Tiger shrimp</div>
+
+    <div class="ingredient i2">🥜</div>
+    <div class="ingredient-label l2">Roasted peanuts</div>
+
+    <div class="ingredient i3">🌱</div>
+    <div class="ingredient-label l3">Bean sprouts</div>
+
+    <div class="ingredient i4">🍳</div>
+    <div class="ingredient-label l4">Wok egg</div>
+
+    <div class="ingredient i5">🌶️</div>
+    <div class="ingredient-label l5">Bird-eye chilli</div>
+
+    <div class="ingredient i6">🍋</div>
+    <div class="ingredient-label l6">Fresh lime</div>
+
+    <div class="ingredient i7">🍜</div>
+    <div class="ingredient-label l7">Rice noodles</div>
+
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+
+  <div class="menu-heading">
+    <div>
+      <div class="section-label reveal">Curated with passion</div>
+      <h2 class="reveal">Our signature bowls.</h2>
+    </div>
+
+    <p class="reveal">
+      Crafted with fresh ingredients,
+      bold sauces and a whole lot of love.
+    </p>
+  </div>
+
+  <div class="menu-grid">
+
+    <article class="menu-card reveal">
+      <div class="menu-image">
+        <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=900&q=85" alt="Spicy noodle bowl">
+      </div>
+      <div class="menu-info">
+        <h3>Bangkok Fire</h3>
+        <span>₹349</span>
+      </div>
+      <p class="menu-description">Spicy wok noodles, chilli oil, fresh vegetables and roasted peanuts.</p>
+    </article>
+
+    <article class="menu-card reveal">
+      <div class="menu-image">
+        <img src="https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=900&q=85" alt="Asian noodle soup">
+      </div>
+      <div class="menu-info">
+        <h3>Tokyo Soul</h3>
+        <span>₹399</span>
+      </div>
+      <p class="menu-description">Rich aromatic broth, handmade noodles, greens and signature seasoning.</p>
+    </article>
+
+    <article class="menu-card reveal">
+      <div class="menu-image">
+        <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=85" alt="Asian stir fried noodles">
+      </div>
+      <div class="menu-info">
+        <h3>Golden Wok</h3>
+        <span>₹329</span>
+      </div>
+      <p class="menu-description">Wok-tossed noodles with vegetables, toasted sesame and house sauce.</p>
+    </article>
+
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story-section" id="story">
+
+  <div class="story-image">
+    <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?auto=format&fit=crop&w=1200&q=85" alt="Asian food preparation">
+  </div>
+
+  <div class="story-content">
+    <div class="section-label">Our story</div>
+
+    <h2>
+      Born from<br>
+      a love for<br>
+      <em>Asian culture.</em>
+    </h2>
+
+    <p>
+      We believe that great food is an experience.
+      From the first sizzle of the wok to the final
+      bite, KŌRA brings together traditional techniques,
+      carefully selected ingredients and contemporary creativity.
+    </p>
+
+    <a href="#contact" class="light-btn">Experience KŌRA ↗</a>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+  <div class="section-label reveal">A thought from our kitchen</div>
+
+  <h2 class="reveal">
+    "Good food brings people together.
+    Great food makes them stay."
+  </h2>
+
+  <p class="reveal">The KŌRA philosophy</p>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+
+  <div class="section-label">Your table is waiting</div>
+
+  <h2>Let's make<br>something delicious.</h2>
+
+  <p>
+    Gather your favourite people.
+    Discover unforgettable flavours.
+    Your next favourite bowl is waiting.
+  </p>
+
+  <a href="mailto:hello@kora.example?subject=Table%20Reservation" class="book-btn">
+    Reserve Your Table ↗
+  </a>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">KŌRA</div>
+      <div class="section-label">Asian Noodle House</div>
+    </div>
+
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#story">Story</a>
+      <a href="#contact">Contact</a>
+      <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram ↗</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 KŌRA. All rights reserved.</span>
+    <span>Made with passion. Served with love.</span>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// MOBILE NAVIGATION
+const toggle = document.querySelector('.menu-toggle');
+const navLinks = document.querySelector('.nav-links');
+
+const navbar = document.querySelector('.navbar');
+const updateNavbar = () => navbar.classList.toggle('scrolled', window.scrollY > 40);
+window.addEventListener('scroll', updateNavbar, { passive: true });
+updateNavbar();
+
+toggle.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+  toggle.textContent = navLinks.classList.contains('active') ? '×' : '☰';
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('active');
+    toggle.textContent = '☰';
+  });
+});
+
+// INTRO ANIMATION
+const introTimeline = gsap.timeline();
+
+introTimeline
+  .to('.intro-logo', {
+    opacity: 1,
+    y: 0,
+    duration: 1.2,
+    ease: 'power4.out'
+  })
+  .to('.intro-tag', {
+    opacity: 1,
+    duration: .8
+  }, '-=.4')
+  .to('.intro-content', {
+    opacity: 0,
+    y: -30,
+    duration: .6,
+    delay: .6
+  })
+  .to('.intro', {
+    yPercent: -100,
+    duration: 1.2,
+    ease: 'power4.inOut'
+  })
+  .set('.intro', { display: 'none' })
+  .from('.navbar', {
+    y: -30,
+    opacity: 0,
+    duration: .8
+  })
+  .from('.hero-reveal', {
+    y: 40,
+    opacity: 0,
+    stagger: .15,
+    duration: 1,
+    ease: 'power3.out'
+  }, '-=.5')
+  .from('.dish', {
+    scale: .7,
+    opacity: 0,
+    rotate: -20,
+    duration: 1.5,
+    ease: 'power3.out'
+  }, '-=1');
+
+// HERO INGREDIENT FLOATING
+gsap.utils.toArray('.floating-ingredient').forEach((item, index) => {
+  gsap.to(item, {
+    y: gsap.utils.random(-22, 22),
+    x: gsap.utils.random(-10, 10),
+    rotation: gsap.utils.random(-20, 20),
+    duration: gsap.utils.random(2.5, 4),
+    repeat: -1,
+    yoyo: true,
+    ease: 'sine.inOut',
+    delay: index * .2
+  });
+});
+
+// HERO PARALLAX
+if (window.matchMedia('(min-width: 651px)').matches) {
+  gsap.to('.dish', {
+    y: -60,
+    rotate: 5,
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1
+    }
+  });
+}
+
+// GENERAL SCROLL REVEALS
+gsap.utils.toArray('.reveal').forEach(item => {
+  gsap.to(item, {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: item,
+      start: 'top 88%',
+      toggleActions: 'play none none reverse'
+    }
+  });
+});
+
+// EXPLODED VIEW INGREDIENTS
+const ingredients = gsap.utils.toArray('.ingredient');
+
+ingredients.forEach((item, index) => {
+  gsap.from(item, {
+    x: gsap.utils.random(-160, 160),
+    y: gsap.utils.random(-160, 160),
+    z: 180,
+    rotation: gsap.utils.random(-90, 90),
+    opacity: 0,
+    duration: 1.5,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.explosion-stage',
+      start: 'top 75%'
+    },
+    delay: index * .12
+  });
+
+  gsap.to(item, {
+    y: '+=15',
+    rotation: gsap.utils.random(-12, 12),
+    duration: 2 + index * .2,
+    repeat: -1,
+    yoyo: true,
+    ease: 'sine.inOut',
+    delay: index * .2
+  });
+});
+
+// LABEL REVEALS
+gsap.utils.toArray('.ingredient-label').forEach((label, index) => {
+  gsap.from(label, {
+    opacity: 0,
+    x: 20,
+    duration: .8,
+    delay: index * .1,
+    scrollTrigger: {
+      trigger: '.explosion-stage',
+      start: 'top 65%'
+    }
+  });
+});
+
+// EXPLOSION PLATE CAMERA MOVEMENT
+gsap.from('.explosion-plate', {
+  scale: .5,
+  rotation: -35,
+  opacity: 0,
+  duration: 1.5,
+  scrollTrigger: {
+    trigger: '.explosion-stage',
+    start: 'top 75%'
+  }
+});
+
+gsap.from('.noodle-center', {
+  scale: .5,
+  rotation: 45,
+  opacity: 0,
+  duration: 1.4,
+  delay: .3,
+  ease: 'back.out(1.5)',
+  scrollTrigger: {
+    trigger: '.explosion-stage',
+    start: 'top 75%'
+  }
+});
+
+// STORY IMAGE PARALLAX
+gsap.fromTo('.story-image img',
+  { scale: 1.2 },
+  {
+    scale: 1,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.story-section',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1
+    }
+  }
+);
+
+// MENU CARDS
+gsap.from('.menu-card', {
+  y: 70,
+  opacity: 0,
+  duration: 1,
+  stagger: .2,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '.menu-grid',
+    start: 'top 80%'
+  }
+});
+
+// SMOOTH ANCHOR SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// REFRESH SCROLLTRIGGER AFTER PAGE IMAGES LOAD
+window.addEventListener('load', () => {
+  ScrollTrigger.refresh();
+});
+</script>
+
+</body>
+</html>
